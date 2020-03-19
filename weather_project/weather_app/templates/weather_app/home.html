@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Weather </title>
+
+    <style>
+        .tp{
+            border:3px solid black;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top ">
+        <!-- add navbar-fixed-top for sticky navbar to above tag -->
+
+        <!-- To keep all clean , use container here-->
+        <div class="container"> 
+
+        
+            <div class="navbar-header">
+                <a href="{% url 'weather' %}" class="navbar-brand "> Home</a>
+            </div>
+
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'admin:index'%}">Admin</a></li>
+            </ul>
+
+            <!-- navbar right -->
+            <!-- <ul class="nav navbar-nav navbar-right">
+                <li><a href="">On the rihgt</a></li>
+            </ul>
+             -->
+        </div>
+    </nav>
+
+
+<!-- <div class="container">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-lg-3 tp">ONE</div>
+                <div class="col-lg-3 tp">TWO</div>
+                <div class="col-lg-3 tp">THREE</div>
+                <div class="col-lg-3 tp">FOUR</div>
+            </div>
+        </div>
+    </div> -->
+            <div class="container">
+                <div class="jumbotron">
+                    <h1> What's the weather like?</h1>
+                </div>
+     
+        <div class="container">
+              <div>
+                    <form method="POST">
+                    {% csrf_token %}
+                        <div>
+                                <div class="jumbotron">
+                                {{ form.name }}
+                                <button type="submit" clas="btn btn-primary">Add City!</button>
+                            </div>
+                        </div>
+                    </form>
+                </div> 
+        </div>
+
+        {% for city_weather in weather_data %}
+            <div class="container">
+                <div class="jumbotron tp" style="background-color: cornflowerblue;">
+                    <img src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="Image">
+                    <h3><i>City: {{ city_weather.city }} </i></h3>
+                    <p><i>Description : {{ city_weather.description }}</i> </p>
+                    <p><i>Temperature : {{ city_weather.temperature }} ° C</i></p>
+                </div>
+            </div>
+        {% endfor  %}
+</body>
+</html>
