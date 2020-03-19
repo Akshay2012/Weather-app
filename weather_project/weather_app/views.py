@@ -9,6 +9,7 @@ def all_weather(request):
     url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=0ab9856cd9a03044b1bdb1530ab6755e'
 
     err_msg=""
+    message=""
     if request.method == 'POST':
         form = CityForm(request.POST)
 
@@ -17,10 +18,23 @@ def all_weather(request):
             existing_citycount=City.objects.filter(name=new_city).count()
             
             if existing_citycount ==0:
-                form.save()
+                r=requests.get(url.format(new_city)).json()
+                if r["cod"]==200:
+                    form.save()
+                else:
+                    err_msg="City Does Not Exist."
             else:
                 err_msg="City Already Exists!"
-                
+
+
+        if err_msg:
+            message=err_msg
+        
+        else:
+            message="City Added Succesfully!"  
+           
+
+
     form = CityForm()
 
     cities= City.objects.all()
@@ -42,5 +56,5 @@ def all_weather(request):
 
     
     
-    context={'weather_data':weatherdata,'form':form}
+    context={'weather_data':weatherdata,'form':form,'message':message}
     return render(request,'weather_app/home.html',context=context)

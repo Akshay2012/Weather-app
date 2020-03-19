@@ -60,11 +60,17 @@
                     <form method="POST">
                     {% csrf_token %}
                         <div>
-                                <div class="jumbotron">
+                            <div class="jumbotron">
                                 {{ form.name }}
                                 <button type="submit" clas="btn btn-primary">Add City!</button>
                             </div>
+                            {% if message %}
+                            <div class="alert alert-success" role="alert">
+                                {{ message }}
+                              </div>
+                            {% endif %}
                         </div>
+                        
                     </form>
                 </div> 
         </div>
