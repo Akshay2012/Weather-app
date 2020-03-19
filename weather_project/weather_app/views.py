@@ -8,10 +8,19 @@ import requests
 def all_weather(request):
     url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=0ab9856cd9a03044b1bdb1530ab6755e'
 
-    
+    err_msg=""
     if request.method == 'POST':
         form = CityForm(request.POST)
-        form.save()
+
+        if form.is_valid():
+            new_city=form.cleaned_data["name"]
+            existing_citycount=City.objects.filter(name=new_city).count()
+            
+            if existing_citycount ==0:
+                form.save()
+            else:
+                err_msg="City Already Exists!"
+                
     form = CityForm()
 
     cities= City.objects.all()
