@@ -6,7 +6,7 @@ import requests
 # Create your views here.
 
 def all_weather(request):
-    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=0ab9856cd9a03044b1bdb1530ab6755e'
+    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=YOUR_KEY'
 
     err_msg=""
     message=""
